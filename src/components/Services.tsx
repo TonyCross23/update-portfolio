@@ -73,11 +73,16 @@ export function Services() {
           <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted md:text-base">
             {serviceCopy.body}
           </p>
-          <div className="mt-12 flex flex-wrap gap-12">
-            {serviceCopy.stats.map((stat) => (
-              <div key={stat.label}>
+          <div className="mt-12 flex flex-wrap gap-4">
+            {serviceCopy.stats.map((stat, index) => (
+              <div
+                key={stat.label}
+                className={`flex h-36 w-36 flex-col items-center justify-center rounded-2xl p-5 text-center ${
+                  index === 0 ? "bg-teal text-white" : "bg-ink/10 text-ink"
+                }`}
+              >
                 <p className="text-4xl font-bold md:text-5xl">{stat.value}</p>
-                <p className="mt-2 text-sm text-muted">{stat.label}</p>
+                <p className="mt-2 text-sm opacity-80">{stat.label}</p>
               </div>
             ))}
           </div>

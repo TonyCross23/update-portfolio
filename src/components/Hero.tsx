@@ -23,12 +23,6 @@ export function Hero() {
           </motion.h1>
           <motion.div variants={fadeUp} className="mt-10 flex flex-wrap items-center gap-5">
             <a
-              href={`mailto:${site.email}`}
-              className="text-sm text-coral underline decoration-coral/40 underline-offset-4"
-            >
-              {site.email}
-            </a>
-            <a
               href={site.cv}
               download="AUNG_KO_OO_CV.pdf"
               className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-xs font-medium text-cream"

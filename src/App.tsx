@@ -6,6 +6,7 @@ import { Works } from "./components/Works"
 import { Notes } from "./components/Notes"
 import { Contact } from "./components/Contact"
 import { Footer } from "./components/Footer"
+import { WelcomeRing } from "./components/WelcomeRing"
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <WelcomeRing />
     </div>
   )
 }
