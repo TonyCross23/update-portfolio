@@ -1,79 +1,161 @@
 import { motion } from "framer-motion"
+import { useScrollReveal } from "../lib/useScrollReveal"
 import { site } from "../data/site"
-import { fadeUp, stagger } from "../lib/motion"
-import { BrushBlob, Portrait } from "./Portrait"
+import { Arrow } from "./Icons"
+
+function SystemIllustration() {
+  const reveal = useScrollReveal()
+  return (
+    <motion.div
+      {...reveal}
+      className="system-illustration"
+      aria-label="Illustration of an API connected to a database and a background worker"
+      role="img"
+    >
+      <div className="system-orbit orbit-one" />
+      <div className="system-orbit orbit-two" />
+      <div className="system-label">
+        <span className="status-dot" /> IDEAS INTO SYSTEMS
+      </div>
+      <div className="code-window">
+        <div className="window-bar">
+          <div className="window-dots">
+            <i />
+            <i />
+            <i />
+          </div>
+          <span>hello.ts</span>
+          <span>TS</span>
+        </div>
+        <div className="code-content">
+          <span className="code-comment">// A little about me</span>
+          <p>
+            <span className="code-purple">const</span> engineer{" "}
+            <span className="code-purple">=</span> {"{"}
+          </p>
+          <p className="code-indent">
+            name: <span className="code-green">'Aung Ko Oo'</span>,
+          </p>
+          <p className="code-indent">
+            alias: <span className="code-green">'Tony'</span>,
+          </p>
+          <p className="code-indent">
+            focus: <span className="code-green">'Backend & beyond'</span>,
+          </p>
+          <p className="code-indent">
+            stack: [<span className="code-green">'TypeScript'</span>,
+          </p>
+          <p className="code-indent deep">
+            <span className="code-green">'NestJS'</span>,{" "}
+            <span className="code-green">'PostgreSQL'</span>],
+          </p>
+          <p>{"}"};</p>
+          <p className="code-last">
+            engineer.<span className="code-blue">build</span>(
+            <span className="code-green">'something useful'</span>);
+            <span className="code-cursor" />
+          </p>
+        </div>
+        <div className="window-footer">
+          <span>
+            <span className="status-dot" /> Ready to build
+          </span>
+          <span>UTF-8</span>
+        </div>
+      </div>
+      <div className="system-flow">
+        <div>
+          <span className="node-symbol">{"{ }"}</span>
+          <span>API</span>
+        </div>
+        <i />
+        <div>
+          <span className="node-symbol">▤</span>
+          <span>Database</span>
+        </div>
+        <i />
+        <div>
+          <span className="node-symbol">↻</span>
+          <span>Worker</span>
+        </div>
+      </div>
+      <div className="floating-label">
+        <span>↗</span> Built with intention.
+      </div>
+    </motion.div>
+  )
+}
 
 export function Hero() {
+  const reveal = useScrollReveal()
   return (
-    <section id="top" className="relative overflow-hidden px-5 pb-16 pt-6 md:px-8 md:pb-24">
-      <motion.div
-        variants={stagger}
-        initial="hidden"
-        animate="show"
-        className="mx-auto grid max-w-6xl items-end gap-8 lg:grid-cols-[1.05fr_0.95fr]"
-      >
-        <div>
-          <motion.h1
-            variants={fadeUp}
-            className="text-4xl leading-[1.08] font-bold tracking-tight md:text-6xl lg:text-7xl"
+    <section id="top" className="hero container">
+      <motion.div className="hero-copy" {...reveal}>
+        <p className="eyebrow">
+          <span className="status-dot" /> AVAILABLE FOR WORK
+        </p>
+        <p className="hero-intro">
+          Hey, I’m Tony{" "}
+          <span className="wave" aria-hidden="true">
+            ✳
+          </span>
+        </p>
+        <h1>
+          Thoughtful code.
+          <br />
+          Useful products.
+          <br />
+          <span>Solid foundations.</span>
+        </h1>
+        <p className="hero-description">
+          I’m {site.name}, a backend developer building APIs, dependable backend
+          systems, and the interfaces that bring them to life.
+        </p>
+        <div className="hero-actions">
+          <a className="button button-primary" href="#works">
+            Explore my projects <Arrow diagonal />
+          </a>
+          <a
+            className="button button-secondary"
+            href={site.cv}
+            download="AUNG_KO_OO_CV.pdf"
           >
-            {site.greeting}
-            <br />
-            I&apos;m {site.firstName}.
-          </motion.h1>
-          <motion.div variants={fadeUp} className="mt-10 flex flex-wrap items-center gap-5">
-            <a
-              href={site.cv}
-              download="AUNG_KO_OO_CV.pdf"
-              className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-xs font-medium text-cream"
-            >
-              Download CV
-            </a>
-          </motion.div>
-          <motion.p
-            variants={fadeUp}
-            className="mt-16 max-w-xs text-4xl leading-none font-bold md:text-5xl"
-          >
-            {site.highlight}
-          </motion.p>
+            Download CV <span aria-hidden="true">↓</span>
+          </a>
         </div>
-
-        <div className="relative mx-auto w-full max-w-lg">
-          <motion.p
-            variants={fadeUp}
-            className="absolute -top-2 right-0 z-20 max-w-[220px] text-right text-sm leading-relaxed text-muted lg:-right-4 lg:top-8"
+        <div className="hero-location">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
           >
-            {site.loveLine}
-          </motion.p>
-
-          <div className="relative mx-auto mt-16 flex h-[420px] items-end justify-center md:h-[500px]">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.86, rotate: -8 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-x-0 top-6 mx-auto h-[340px] w-[340px] md:h-[420px] md:w-[420px]"
-            >
-              <BrushBlob />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.15 }}
-              className="relative z-10"
-            >
-              <Portrait />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.45, type: "spring", stiffness: 160 }}
-              className="absolute right-0 bottom-16 z-20 flex h-28 w-28 items-center justify-center rounded-full border-[6px] border-cream bg-ink text-center text-[9px] leading-snug font-medium tracking-wide text-cream uppercase md:right-2 md:h-32 md:w-32 md:text-[10px]"
-            >
-              <span className="px-3">{site.badge}</span>
-            </motion.div>
-          </div>
+            <path
+              d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"
+              stroke="currentColor"
+              strokeWidth="1.6"
+            />
+            <circle
+              cx="12"
+              cy="10"
+              r="2.5"
+              stroke="currentColor"
+              strokeWidth="1.6"
+            />
+          </svg>
+          {site.location}
+          <span className="location-divider">/</span> Open to remote
+          opportunities
         </div>
       </motion.div>
+      <SystemIllustration />
+      <div className="hero-bottom">
+        <span>A BACKEND MINDSET. A PRODUCT PERSPECTIVE.</span>
+        <a href="#works">
+          SCROLL TO EXPLORE <span aria-hidden="true">↓</span>
+        </a>
+      </div>
     </section>
   )
 }

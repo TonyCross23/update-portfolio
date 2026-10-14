@@ -2,9 +2,10 @@ export const site = {
   name: "Aung Ko Oo",
   firstName: "Tony",
   logo: "Tony",
-  role: "Software Engineer",
+  role: "Backend Developer",
   greeting: "Hey There,",
-  intro: "I design and ship backend systems — APIs, microservices, and the queues that keep them honest.",
+  intro:
+    "I design and ship backend systems — APIs, microservices, and the queues that keep them honest.",
   loveLine: "I build clean services, and I love what I do.",
   email: "tonycross440@gmail.com",
   phone: "+95 9 000 000 000",
@@ -12,15 +13,15 @@ export const site = {
   // linkedin: "https://www.linkedin.com/",
   cv: "/AUNG_KO_OO_CV.pdf",
   location: "Yangon, Myanmar",
-  badge: "TypeScript engineer focused on APIs, Prisma, and event-driven services",
+  badge:
+    "TypeScript engineer focused on APIs, Prisma, and event-driven services",
   highlight: "Backend first",
 }
 
 export const nav = [
-  { href: "#services", label: "Services" },
+  { href: "#works", label: "Projects" },
+  { href: "#services", label: "Expertise" },
   { href: "#experience", label: "Experience" },
-  { href: "#works", label: "Works" },
-  { href: "#notes", label: "Notes" },
   { href: "#contact", label: "Contact" },
 ]
 
@@ -46,7 +47,7 @@ export const services = [
 ]
 
 export const serviceCopy = {
-  title: "What do I help?",
+  title: "Good products start with solid foundations.",
   body: "I take product ideas and turn them into typed services: auth, catalogs, workers, and the contracts between them. PostgreSQL stays the source of truth. Queues take the slow work off the request path.",
   stats: [
     { value: "4+", label: "Shipped systems" },
@@ -56,77 +57,108 @@ export const serviceCopy = {
 
 export const experience = [
   {
-    company: "Independent",
-    role: "Software Engineer",
-    period: "2024 — Present",
-    points: [
-      "NestJS microservices with Prisma, PostgreSQL, JWT, and RabbitMQ.",
-      "Ecommerce API with Passport, Argon2, and AMQP for checkout work.",
-    ],
+    company: "Royal MT Co., Ltd.",
+    role: "Backend Developer",
+    period: "Present",
+    points: [],
   },
   {
-    company: "Platform work",
-    role: "Backend / data",
-    period: "2025 — 2026",
-    points: [
-      "Express APIs in front of Tarantool and PostgreSQL for fast reads.",
-      "Shop services with Prisma migrations and queue workers for side effects.",
-    ],
+    company: "Freelance",
+    role: "Full-Stack Developer",
+    period: "2024 — 2025",
+    points: ["Two years of freelance full-stack development experience."],
   },
   {
-    company: "Messaging",
-    role: "Workers & AMQP",
-    period: "Ongoing",
-    points: [
-      "API + worker splits so hashing and jobs do not block HTTP.",
-      "Typed payloads and clear service boundaries instead of shared tables.",
-    ],
+    company: "CGN Goldelan Co.,Ltd.",
+    role: "Intern (BIB OJT)",
+    period: "2024",
+    points: ["Completed a six-month internship through the BIB OJT program."],
   },
 ]
 
-export const works = [
+export type Project = {
+  category: string
+  title: string
+  tone: string
+  blurb: string
+  href: string
+  tags: string[]
+  kind: "Web" | "Mobile"
+  preview: "logs" | "expense" | "map" | "todo" | "services" | "pos"
+}
+
+export const works: Project[] = [
   {
-    category: "NestJS",
-    title: "Todo + AI suggestion",
-    tone: "gold",
-    blurb: "NestJS todo API with AI-assisted suggestions for the next task.",
-    href: "https://github.com/TonyCross23/nestjs_todo_ai_suggestion",
-  },
-  {
-    category: "Microservices",
-    title: "NestJS microservices",
+    category: "Observability / Full stack",
+    title: "Log Monitoring Dashboard",
     tone: "teal",
-    blurb: "Workspace services with Prisma, PostgreSQL, JWT, and RabbitMQ.",
-    href: "https://github.com/TonyCross23/nestjs_microservices",
+    blurb:
+      "A TypeScript dashboard for exploring, filtering, and exporting application logs, backed by an Express API and PostgreSQL.",
+    href: "https://github.com/TonyCross23/Log-Monitoring-Dashboard-",
+    tags: ["React", "TypeScript", "Express", "Prisma"],
+    kind: "Web",
+    preview: "logs",
   },
   {
-    category: "TypeScript",
+    category: "Personal finance / Android",
+    title: "Expense Tracker",
+    tone: "gold",
+    blurb:
+      "An offline-first Android app for accounts, transactions, and spending reports. Data stays on the device, with JSON backup and restore.",
+    href: "https://github.com/TonyCross23/Expand_tracker_moblie_app",
+    tags: ["React Native", "Expo", "TypeScript", "AsyncStorage"],
+    kind: "Mobile",
+    preview: "expense",
+  },
+  {
+    category: "Live location / Full stack",
+    title: "PulseMap",
+    tone: "mint",
+    blurb:
+      "Live GPS sharing on an interactive map, with nearby location queries, road directions, and real-time updates over Socket.IO.",
+    href: "https://github.com/TonyCross23/share-location",
+    tags: ["React", "Socket.IO", "PostGIS", "Leaflet"],
+    kind: "Web",
+    preview: "map",
+  },
+  {
+    category: "Productivity / Backend",
+    title: "Todo + AI Suggestion",
+    tone: "gold",
+    blurb: "A NestJS todo API with AI-assisted suggestions for the next task.",
+    href: "https://github.com/TonyCross23/nestjs_todo_ai_suggestion",
+    tags: ["NestJS", "API", "AI"],
+    kind: "Web",
+    preview: "todo",
+  },
+  {
+    category: "Architecture / Backend",
+    title: "NestJS Microservices",
+    tone: "teal",
+    blurb:
+      "Workspace services with Prisma, PostgreSQL, JWT, and RabbitMQ. Built around clear service boundaries and typed messages.",
+    href: "https://github.com/TonyCross23/nestjs_microservices",
+    tags: ["NestJS", "Prisma", "RabbitMQ"],
+    kind: "Web",
+    preview: "services",
+  },
+  {
+    category: "Commerce / TypeScript",
     title: "POS-TS",
     tone: "mint",
-    blurb: "Point-of-sale flow in TypeScript — catalog, checkout, and typed domain.",
+    blurb:
+      "A point-of-sale flow in TypeScript, from catalog to checkout, with a typed domain at its core.",
     href: "https://github.com/TonyCross23/POS-TS",
-  },
-]
-
-export const notes = [
-  {
-    title: "Queues over shared tables",
-    body: "Services should talk through messages, not by reaching into each other’s databases.",
-  },
-  {
-    title: "Typed payloads",
-    body: "Zod at the edge keeps NestJS and workers honest when a field changes.",
-  },
-  {
-    title: "Workers for slow work",
-    body: "Hashing, mail, and order side effects belong off the request path.",
+    tags: ["TypeScript", "Point of sale"],
+    kind: "Web",
+    preview: "pos",
   },
 ]
 
 export const contact = {
   kicker: "Available for work",
-  title: "Send a real brief.",
-  body: "No placeholder quotes. If you have an API, a queue, or a service that needs to ship, write what you need — I will reply from the same inbox.",
+  title: "Have something in mind?",
+  body: "Have a project, an interesting challenge, or a team looking for an engineer? Tell me a little about it. I’d love to hear from you.",
   facts: [
     { label: "Based in", value: "Yangon, Myanmar" },
     { label: "Reply window", value: "Within a few days" },

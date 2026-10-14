@@ -3,25 +3,24 @@ import { Hero } from "./components/Hero"
 import { Services } from "./components/Services"
 import { Experience } from "./components/Experience"
 import { Works } from "./components/Works"
-import { Notes } from "./components/Notes"
 import { Contact } from "./components/Contact"
 import { Footer } from "./components/Footer"
-import { WelcomeRing } from "./components/WelcomeRing"
 
 export default function App() {
   return (
-    <div className="font-mono min-h-svh bg-cream text-ink">
+    <>
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <Navbar />
-      <main>
+      <main id="main-content">
         <Hero />
+        <Works />
         <Services />
         <Experience />
-        <Works />
-        <Notes />
         <Contact />
       </main>
       <Footer />
-      <WelcomeRing />
-    </div>
+    </>
   )
 }
