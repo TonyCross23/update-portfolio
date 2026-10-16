@@ -69,7 +69,7 @@ export const experience = [
     points: ["Two years of freelance full-stack development experience."],
   },
   {
-    company: "CGN Goldelan Co.,Ltd.",
+    company: "CGM Golden Land Co., Ltd.",
     role: "Intern (BIB OJT)",
     period: "2024",
     points: ["Completed a six-month internship through the BIB OJT program."],
