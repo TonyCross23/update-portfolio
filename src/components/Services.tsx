@@ -17,7 +17,6 @@ export function Services() {
       <div className="container">
         <div className="expertise-layout">
           <SectionHeading
-            number="02"
             label="WHAT I BRING"
             title={serviceCopy.title}
           />
@@ -40,7 +39,6 @@ export function Services() {
               <span className="expertise-icon" aria-hidden="true">
                 {symbols[i]}
               </span>
-              <span className="expertise-number">0{i + 1}</span>
               <h3>{service.title}</h3>
               <p>{descriptions[i]}</p>
               <span className="expertise-stack">{service.count}</span>

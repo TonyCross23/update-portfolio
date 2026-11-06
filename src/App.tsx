@@ -5,6 +5,7 @@ import { Experience } from "./components/Experience"
 import { Works } from "./components/Works"
 import { Contact } from "./components/Contact"
 import { Footer } from "./components/Footer"
+import { StackRibbon } from "./components/StackRibbon"
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       <Navbar />
       <main id="main-content">
         <Hero />
+        <StackRibbon />
         <Works />
         <Services />
         <Experience />

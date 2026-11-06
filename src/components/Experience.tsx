@@ -10,7 +10,6 @@ export function Experience() {
       <div className="container experience-layout">
         <div>
           <SectionHeading
-            number="03"
             label="MY EXPERIENCE"
             title="Always building. Always learning."
           />
@@ -19,7 +18,7 @@ export function Experience() {
           </p>
         </div>
         <div className="timeline">
-          {experience.map((item, i) => (
+          {experience.map((item) => (
             <motion.article
               {...reveal}
               key={item.company}
@@ -38,7 +37,6 @@ export function Experience() {
                   ))}
                 </ul>
               )}
-              <span className="experience-index">0{i + 1}</span>
             </motion.article>
           ))}
         </div>

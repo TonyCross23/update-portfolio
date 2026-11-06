@@ -21,12 +21,10 @@ export function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 }
 
 export function SectionHeading({
-  number,
   label,
   title,
   description,
 }: {
-  number: string
   label: string
   title: string
   description?: string
@@ -35,7 +33,7 @@ export function SectionHeading({
   return (
     <motion.div className="section-heading" {...reveal}>
       <p className="eyebrow">
-        <span>{number}</span> {label}
+        {label}
       </p>
       <h2>{title}</h2>
       {description && <p className="section-description">{description}</p>}

@@ -13,9 +13,11 @@ const ThemeContext = createContext<ThemeContextValue>({
 })
 
 function readTheme(): Theme {
-  const stored = localStorage.getItem("theme")
-  if (stored === "dark" || stored === "light") return stored
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+  try {
+    const stored = localStorage.getItem("theme")
+    if (stored === "dark" || stored === "light") return stored
+  } catch { /* Storage is optional. */ }
+  return "dark"
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -25,7 +27,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark")
-    localStorage.setItem("theme", theme)
+    try { localStorage.setItem("theme", theme) } catch { /* Storage is optional. */ }
   }, [theme])
 
   return (

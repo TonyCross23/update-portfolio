@@ -1,8 +1,8 @@
-import { motion } from "framer-motion"
-import { useScrollReveal } from "../lib/useScrollReveal"
-import { useState } from "react"
+import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "framer-motion"
+import { useId, useRef, useState, type PointerEvent } from "react"
 import { site, works, type Project } from "../data/site"
-import { Arrow, SectionHeading } from "./Icons"
+import { Arrow } from "./Icons"
+import "./Works.css"
 
 function Preview({ type }: { type: Project["preview"] }) {
   if (type === "expense")
@@ -49,6 +49,31 @@ function Preview({ type }: { type: Project["preview"] }) {
           <div className="phone-nav">
             ⌂ <span>▥</span> ＋ <span>◷</span> ⚙
           </div>
+        </div>
+      </div>
+    )
+  if (type === "recipe")
+    return (
+      <div className="project-art recipe-art" aria-hidden="true">
+        <div className="recipe-screen">
+          <div className="recipe-brand"><span>✳</span> SocialRecipe <small>Hub</small></div>
+          <div className="recipe-heading">A little inspiration.<br /><strong>A lot of flavour.</strong></div>
+          <div className="recipe-feature">
+            <div className="recipe-dish">
+              <svg viewBox="0 0 200 200" fill="none">
+                <circle cx="100" cy="100" r="86" fill="#e9d9bf" />
+                <circle cx="100" cy="96" r="82" fill="#fffcf4" />
+                <circle cx="100" cy="96" r="64" fill="#eee4cd" />
+                <circle cx="100" cy="96" r="56" fill="#d3873b" />
+                <path d="M65 79c60-37 76 14 22 27s-22-43 16-33 39 31-1 45-59-14-31-28 52-2 42 15-44 12-27-12 45-1 31 19" stroke="#f5c976" strokeWidth="8" strokeLinecap="round" />
+                <path d="M86 52c-20-10-29 2-20 16 11 8 23-1 20-16ZM128 122c21 2 25 17 10 25-15 2-21-11-10-25Z" fill="#466b42" />
+                <circle cx="132" cy="72" r="9" fill="#b84c35" /><circle cx="69" cy="116" r="7" fill="#b84c35" />
+                <path d="m90 127 7-3m27-34 6 4m-47-7 6 3" stroke="#fff3cf" strokeWidth="3" strokeLinecap="round" />
+              </svg>
+            </div>
+            <div className="recipe-feature-copy"><span>FROM THE COMMUNITY</span><h4>Made to be<br />shared.</h4><p>Recipes, stories & everyday cooking.</p></div>
+          </div>
+          <div className="recipe-tabs"><span>Discover recipes</span><span>♡ Saved</span><span>✧ AI Cook</span></div>
         </div>
       </div>
     )
@@ -212,98 +237,120 @@ function Preview({ type }: { type: Project["preview"] }) {
   )
 }
 
-export function Works() {
-  const reveal = useScrollReveal()
-  const [filter, setFilter] = useState("All projects")
-  const filtered = works.filter(
-    (project) => filter === "All projects" || project.kind === filter,
-  )
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const reduceMotion = useReducedMotion()
+  const [hovered, setHovered] = useState(false)
+  const filterId = useId().replace(/[^a-zA-Z0-9_-]/g, "")
+  const pointerX = useMotionValue(0)
+  const pointerY = useMotionValue(0)
+  const rotateX = useSpring(pointerY, { stiffness: 130, damping: 22 })
+  const rotateY = useSpring(pointerX, { stiffness: 130, damping: 22 })
+  function move(event: PointerEvent<HTMLAnchorElement>) {
+    if (reduceMotion || event.pointerType === "touch") return
+    const bounds = event.currentTarget.getBoundingClientRect()
+    pointerX.set(((event.clientX - bounds.left) / bounds.width - .5) * 5)
+    pointerY.set(-((event.clientY - bounds.top) / bounds.height - .5) * 5)
+    setHovered(true)
+  }
+  function reset() { pointerX.set(0); pointerY.set(0); setHovered(false) }
   return (
-    <section id="works" className="section projects-section">
-      <div className="container">
-        <div className="section-top">
-          <SectionHeading
-            number="01"
-            label="SELECTED WORK"
-            title="Built to do something."
-            description="A few things I’ve been working on. From the services behind the scenes to the experience on your screen."
-          />
-          <a
-            className="text-link"
-            href={site.github}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            All on GitHub <Arrow diagonal />
+    <motion.article
+      className={`project-card project-${project.preview}`}
+      initial={reduceMotion ? false : { opacity: 0, y: 48, filter: "blur(3px)", clipPath: "inset(8% 0 0 0)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", clipPath: "inset(0% 0 0 0)" }}
+      viewport={{ once: false, amount: .18, margin: "0px 0px -24px 0px" }}
+      transition={{ duration: reduceMotion ? 0 : .8, delay: reduceMotion ? 0 : (index % 3) * .08, ease: [.22, 1, .36, 1] }}
+    >
+      <svg className="work-filter-defs" aria-hidden="true"><defs><filter id={filterId} x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="8" result="ripple" />
+        <motion.feDisplacementMap in="SourceGraphic" in2="ripple" xChannelSelector="R" yChannelSelector="G" initial={{ attrScale: 0 }} animate={{ attrScale: hovered && !reduceMotion ? [0, 13, 4] : 0 }} transition={{ duration: .8, ease: "easeOut" }} />
+      </filter></defs></svg>
+      <motion.a
+        className="project-art-link"
+        onPointerMove={move}
+        onPointerLeave={reset}
+        onBlur={reset}
+        style={reduceMotion ? undefined : { rotateX, rotateY, transformPerspective: 1000 }}
+        href={project.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`View ${project.title} on GitHub`}
+      >
+        <div className="project-cover-surface" style={{ filter: hovered && !reduceMotion ? `url(#${filterId})` : undefined }}><Preview type={project.preview} /></div>
+        <span className="preview-label">Concept preview</span>
+        <span className="project-hover-label" aria-hidden="true">EXPLORE ↗</span>
+      </motion.a>
+      <div className="project-copy">
+        <h3><a href={project.href} target="_blank" rel="noopener noreferrer">{project.title}</a></h3>
+        <div className="project-summary">
+          <p className="project-description">{project.blurb}</p>
+          <a className="project-explore" href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`Explore ${project.title} on GitHub`}>
+            <span>EXPLORE PROJECT</span><Arrow />
           </a>
         </div>
-        <div
-          className="project-filters"
-          role="group"
-          aria-label="Filter projects"
-        >
+      </div>
+    </motion.article>
+  )
+}
+
+function FloatingPreview({ project, index, progress }: { project: Project; index: number; progress: MotionValue<number> }) {
+  const reduceMotion = useReducedMotion()
+  const direction = index % 2 === 0 ? -1 : 1
+  const x = useTransform(progress, [0, .5, 1], [direction * 70, 0, direction * -100])
+  const y = useTransform(progress, [0, 1], [70 + index * 8, -100 - index * 12])
+  const rotate = useTransform(progress, [0, 1], [direction * -7, direction * 8])
+  return <motion.div className={`work-float work-float-${index + 1}`} style={reduceMotion ? undefined : { x, y, rotate }}><Preview type={project.preview} /></motion.div>
+}
+
+function WorkIntroduction() {
+  const intro = useRef<HTMLDivElement>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: intro, offset: ["start end", "end start"] })
+  const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 25 })
+  const titleY = useTransform(progress, [0, 1], [35, -45])
+  return (
+    <div className="work-introduction" ref={intro}>
+      <div className="work-collage" aria-hidden="true">
+        {[...works, works[0], works[2]].slice(0, 8).map((project, index) => <FloatingPreview project={project} index={index} progress={progress} key={`${project.preview}-${index}`} />)}
+      </div>
+      <div className="work-monogram" aria-hidden="true">t.</div>
+      <motion.div className="work-intro-copy" style={reduceMotion ? undefined : { y: titleY }}>
+        <motion.h2 initial={reduceMotion ? false : { opacity: 0, y: 25, filter: "blur(6px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", clipPath: "inset(0% 0 0 0)" }} viewport={{ once: true }} transition={{ duration: 1 }}>My work</motion.h2>
+        <p>A curated collection of backend systems,<br />web products, and mobile experiences.</p>
+      </motion.div>
+      <a className="work-discover" href="#project-collection" aria-label="Discover my projects">↓</a>
+    </div>
+  )
+}
+
+export function Works() {
+  const [filter, setFilter] = useState("All projects")
+  const filtered = works.filter((project) => filter === "All projects" || project.kind === filter)
+  return (
+    <section id="works" className="projects-section" aria-label="Selected work">
+      <div className="work-background" aria-hidden="true">
+        <svg viewBox="0 0 1440 3200" preserveAspectRatio="none">
+          <path d="M-180 70C250 240 1420 260 1260 670S-140 1130 140 1500S1530 1910 1190 2350S160 2670 330 3180" />
+          <path d="M-220 110C350 270 1450 310 1260 670S-80 1090 140 1500S1460 1990 1190 2350S90 2720 330 3180" />
+          <path d="M-80 20C170 320 1520 370 1260 670S-180 1200 140 1500S1570 1850 1190 2350S250 2640 330 3180" />
+          <circle className="work-flow-dot" r="1.6"><animateMotion dur="18s" repeatCount="indefinite" path="M-180 70C250 240 1420 260 1260 670S-140 1130 140 1500S1530 1910 1190 2350S160 2670 330 3180" /></circle><circle cx="1260" cy="670" r="2" /><circle cx="140" cy="1500" r="2" /><circle cx="1190" cy="2350" r="2" />
+        </svg>
+        <i /><i /><i /><i /><i /><i />
+      </div>
+      <WorkIntroduction />
+      <div id="project-collection" className="work-collection container">
+        <div className="project-filters" role="group" aria-label="Filter projects">
           {["All projects", "Web", "Mobile"].map((item) => (
-            <button
-              type="button"
-              key={item}
-              aria-pressed={filter === item}
-              className={filter === item ? "active" : ""}
-              onClick={() => setFilter(item)}
-            >
-              {item}
-              <span>
-                {item === "All projects"
-                  ? works.length
-                  : works.filter((project) => project.kind === item).length}
-              </span>
-            </button>
+            <button type="button" key={item} aria-pressed={filter === item} className={filter === item ? "active" : ""} onClick={() => setFilter(item)}>{item}</button>
           ))}
         </div>
         <div className="projects-grid">
-          {filtered.map((project) => (
-            <motion.article
-              {...reveal}
-              className="project-card"
-              key={project.href}
-            >
-              <a
-                className="project-art-link"
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`View ${project.title} on GitHub`}
-              >
-                <Preview type={project.preview} />
-                <span className="project-open">
-                  <Arrow diagonal />
-                </span>
-                <span className="preview-label">Illustrative preview</span>
-              </a>
-              <div className="project-copy">
-                <p className="eyebrow">{project.category}</p>
-                <h3>
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {project.title} <Arrow diagonal />
-                  </a>
-                </h3>
-                <p className="project-description">{project.blurb}</p>
-                <div className="project-tags">
-                  {project.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </motion.article>
-          ))}
+          {filtered.map((project, index) => <ProjectCard key={project.href} project={project} index={index} />)}
         </div>
-        <p className="project-count" aria-live="polite">
-          Showing {filtered.length} of {works.length} projects{" "}
-          <span>Good ideas. Working code.</span>
-        </p>
+        <div className="work-outro">
+          <p className="project-count" aria-live="polite">Showing {filtered.length} of {works.length} projects</p>
+          <a href={site.github} className="work-github" target="_blank" rel="noopener noreferrer">More on GitHub <Arrow diagonal /></a>
+        </div>
       </div>
     </section>
   )

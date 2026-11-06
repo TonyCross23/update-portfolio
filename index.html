@@ -18,11 +18,9 @@
     <script>
       try {
         const stored = localStorage.getItem("theme")
-        const dark =
-          stored === "dark" ||
-          (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches)
+        const dark = stored !== "light"
         if (dark) document.documentElement.classList.add("dark")
-      } catch {}
+      } catch { document.documentElement.classList.add("dark") }
     </script>
   </head>
   <body>

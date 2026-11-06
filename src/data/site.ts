@@ -84,7 +84,7 @@ export type Project = {
   href: string
   tags: string[]
   kind: "Web" | "Mobile"
-  preview: "logs" | "expense" | "map" | "todo" | "services" | "pos"
+  preview: "logs" | "expense" | "map" | "todo" | "services" | "pos" | "recipe"
 }
 
 export const works: Project[] = [
@@ -109,6 +109,17 @@ export const works: Project[] = [
     tags: ["React Native", "Expo", "TypeScript", "AsyncStorage"],
     kind: "Mobile",
     preview: "expense",
+  },
+  {
+    category: "Recipe community / Mobile & full stack",
+    title: "SocialRecipe Hub",
+    tone: "coral",
+    blurb:
+      "A recipe-sharing community with a React Native app, an Express API, and a React admin portal. Includes saved recipes, shopping lists, and an AI cooking assistant.",
+    href: "https://github.com/TonyCross23/SocialRecipe-Hub",
+    tags: ["React Native", "Expo", "Express", "Prisma", "PostgreSQL"],
+    kind: "Mobile",
+    preview: "recipe",
   },
   {
     category: "Live location / Full stack",
