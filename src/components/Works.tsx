@@ -277,7 +277,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         aria-label={`View ${project.title} on GitHub`}
       >
         <div className="project-cover-surface" style={{ filter: hovered && !reduceMotion ? `url(#${filterId})` : undefined }}><Preview type={project.preview} /></div>
-        <span className="preview-label">Concept preview</span>
         <span className="project-hover-label" aria-hidden="true">EXPLORE ↗</span>
       </motion.a>
       <div className="project-copy">

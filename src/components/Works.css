@@ -72,7 +72,6 @@
 .project-explore { display: flex; align-items: center; justify-content: space-between; padding-bottom: 9px; gap: 10px; font-family: var(--font-mono); font-size: clamp(11px, .95vw, 14px); border-bottom: 1px solid var(--work-muted); color: var(--work-ink); white-space: nowrap; }
 .project-explore svg { width: 16px; height: 16px; transform: translateX(-3px); transition: transform .2s ease; flex-shrink: 0; }
 .project-explore:hover svg, .project-explore:focus-visible svg { transform: translateX(0); }
-.projects-section .preview-label { font-size: 7px; bottom: 9px; right: 9px; padding: 3px 5px; background: #0405088c; color: #d3d3d5; opacity: .7; }
 .project-hover-label { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; color: #fff; opacity: 0; background: #04050825; transition: opacity .3s; }
 .project-art-link:hover .project-hover-label { opacity: 1; }
 .work-outro { margin: 100px 0 0; display: flex; justify-content: space-between; align-items: center; }
